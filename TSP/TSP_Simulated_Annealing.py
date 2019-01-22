@@ -35,16 +35,18 @@ class Simulated_Annealing():
         if(len(neighbour)>3):
             continue_search = True
             while (continue_search):
-                index_1 = random.randint(1, len(neighbour) - 2)
-                index_2 = random.randint(1, len(neighbour) - 2)
-                if (index_1 != index_2):
+                ind_1 = random.randint(1, len(neighbour) - 2)
+                ind_2 = random.randint(1, len(neighbour) - 2)
+                if (ind_1 != ind_2):
                     continue_search = False
-                    neighbour[index_1],neighbour[index_2]=neighbour[index_2],neighbour[index_1]
+                    neighbour[ind_1],neighbour[ind_2]=neighbour[ind_2],neighbour[ind_1]
         return neighbour
 
     def distance(self,tour):
         '''Calulate the distances between the requests'''
-        distance = sum(list(map(lambda request,request_2: geodesic((request[1],request[2]),(request_2[1],request_2[2])).meters, tour[:-1],tour[1:])))
+        distance = sum(list(map(lambda request,request_2: \
+                                geodesic((request[1],request[2]),(request_2[1],request_2[2])).meters, \
+                                tour[:-1],tour[1:])))
         return distance
 
 #Tasks: customize the cooling schedule
@@ -61,10 +63,11 @@ class Simulated_Annealing():
                 r = random.random()
                 if (r < np.exp(-(delta / temperature))):
                     current_best = neighbour
-        print("The best route found so far has the distance: " + str(self.distance(current_best))+ " meters and the requests are served in following order: ")
+        print("The best route found so far has the overall distance of " + str(self.distance(current_best))+ \
+              " meters and the requests are served in following order: ")
         tour_requests=[current_best[i][0] for i in range(len(current_best))]
         return tour_requests
 
-#create instance
+#Create instance
 one_instance=Simulated_Annealing(first_tour)
 print(one_instance.optimize())
