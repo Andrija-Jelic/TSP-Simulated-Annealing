@@ -24,7 +24,6 @@ first_tour=list(map(lambda h,i,j:[h,i,j],df.name,df.lat,df.lon))
 #Per definition the salesman starts and finishes his tour in the same place
 first_tour.append(first_tour[0])
 
-
 class Simulated_Annealing():
 
     def __init__(self,tour):
